@@ -21,29 +21,22 @@ import com.printf.shuttleTracker.locationServices.R;
 public class MainActivity extends AppCompatActivity {
        private final static int PERMISSION_FINE_LOCATION = 1; //permission request number, identifies the permission
        private Button startOperation; // used to switch the service on and off
+        private boolean isActive;
 
 
 @Override
-protected void onCreate(Bundle savedInstanceState){
+protected void onCreate(Bundle savedInstanceState) {
+
+    isActive = true;
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.activity_main);
-
-    startOperation = findViewById(R.id.startOperation);
-    startOperation.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            Log.d("Button Status", ": Button Clicked");
-            if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_FINE_LOCATION);
-            } else {
-                startLocationService();
-            }
-        }
-
-
-        });
+    Log.d("Button Status", ": Button Clicked");
+    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_FINE_LOCATION);
+    } else {
+        startLocationService();
     }
+}
 
 
 public void startLocationService(){
@@ -86,5 +79,12 @@ public void startLocationService(){
                 Toast.makeText(this, "You must enable these permissions inorder to to use this app", Toast.LENGTH_SHORT);
             }
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        isActive = false;
+        super.onDestroy();
     }
 }

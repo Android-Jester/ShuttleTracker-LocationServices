@@ -48,8 +48,10 @@ public class LocationServiceReceiver extends Service {
                 super.onLocationResult(locationResult);
                 locationResult.getLastLocation();
                 location = locationResult.getLastLocation();
-                double  latitude = location.getLatitude();
+                double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
+                new FirebaseSender(latitude, longitude);
+
                 Log.d(TAG ,latitude + ", " + longitude + ", ");
                 Toast.makeText(getApplicationContext(), latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
             }
