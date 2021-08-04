@@ -27,16 +27,13 @@ import java.util.List;
 
 public class LocationServiceReceiver extends Service {
     private String TAG = LocationServiceReceiver.class.getSimpleName();
-    private static final String CHANNEL_ID = "location_notification_channel"; // notification channel id
-    private static final String CHANNEL_NAME = "Location Service"; // The user visible name of the notification channel
-    private static final String CHANNEL_DESCRIPTION = "This channel is used by location service"; // notification channel description
-    private static final int REQUEST_CODE = 0; // private request code for the sender of the pending intent
     public static final int DEFAULT_INTERVAL = 4000; // default location update interval
     public static final int FASTEST_INTERVAL = 2000; // fastest location update interval
     private LocationCallback locationCallBack ; //Used for receiving notifications from the FusedLocationProviderApi
     // when the device location has changed or can no longer be determined
     private Location location; // last known location or updated location
     private LocationRequest locationRequest; //
+
 
     @Override
     public void onCreate() {
@@ -50,7 +47,7 @@ public class LocationServiceReceiver extends Service {
                 location = locationResult.getLastLocation();
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
-                new FirebaseSender(latitude, longitude);
+                new FirebaseSender(latitude, longitude, true);
 
                 Log.d(TAG ,latitude + ", " + longitude + ", ");
                 Toast.makeText(getApplicationContext(), latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
@@ -110,6 +107,7 @@ public class LocationServiceReceiver extends Service {
     public boolean stopService(Intent name) {
         Log.d(TAG,"STOP SERVICE");
         stopLocationService();
+
         return super.stopService(name);
     }
 
@@ -124,6 +122,7 @@ public class LocationServiceReceiver extends Service {
         Log.d("location", "*****STOPPED****");
         // Remove all location updates for the given location result listener
         LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallBack);
+        new FirebaseSender(0.0, 0.0, false);
         // stop the service and remove the notification
 //        stopForeground(true);
         stopSelf();

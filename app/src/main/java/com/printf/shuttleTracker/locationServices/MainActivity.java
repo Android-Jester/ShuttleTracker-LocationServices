@@ -21,13 +21,11 @@ import com.printf.shuttleTracker.locationServices.R;
 public class MainActivity extends AppCompatActivity {
        private final static int PERMISSION_FINE_LOCATION = 1; //permission request number, identifies the permission
        private Button startOperation; // used to switch the service on and off
-        private boolean isActive;
 
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
 
-    isActive = true;
     super.onCreate(savedInstanceState);
 
     Log.d("Button Status", ": Button Clicked");
@@ -84,7 +82,6 @@ public void startLocationService(){
 
     @Override
     protected void onDestroy() {
-        isActive = false;
         super.onDestroy();
     }
 }
