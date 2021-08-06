@@ -1,5 +1,12 @@
 package com.printf.shuttleTracker.locationServices;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -10,8 +17,11 @@ public class FirebaseSender {
     public DatabaseReference activeContainer = database.getReference("commericalLocationA").child("isActve");
 
     FirebaseSender(double latitude, double longitude, boolean isActive){
-        latitudeContainer.setValue(String.valueOf(latitude));
-        longitudeContainer.setValue(String.valueOf(longitude));
+        latitudeContainer.setValue(latitude);
+        longitudeContainer.setValue(longitude);
+        activeContainer.setValue(isActive, (error, ref) -> {
+            Log.d("Firebase Error", String.valueOf(error));
+        });
     }
 
 
