@@ -33,11 +33,9 @@ protected void onCreate(Bundle savedInstanceState) {
 
     startOperation = findViewById(R.id.startOperation);
     startOperation.setOnClickListener(v -> {
-        try {
-            startActivity(Intent.getIntent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+
+            startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+
     });
 
     if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
