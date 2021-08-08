@@ -50,7 +50,6 @@ public class LocationServiceReceiver extends Service {
                 new FirebaseSender(latitude, longitude, true);
 
                 Log.d(TAG ,latitude + ", " + longitude + ", ");
-                Toast.makeText(getApplicationContext(), latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -81,20 +80,7 @@ public class LocationServiceReceiver extends Service {
         locationRequest.setFastestInterval(FASTEST_INTERVAL);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
-    private String getUserAddress() {
-        // get address from location and show it
-        Geocoder geocoder = new Geocoder(LocationServiceReceiver.this);
-        try
-        {
-            List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            return (addressList.get(0).getAddressLine(0));
 
-        }
-        catch (Exception e)
-        {
-            return("Unable to get address");
-        }
-    }
 
     @Override
     public void onDestroy()

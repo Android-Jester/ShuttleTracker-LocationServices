@@ -11,7 +11,7 @@
         android:id="@+id/locationDisplay"
         android:layout_width="279dp"
         android:layout_height="168dp"
-        android:text="Hello"
+        android:text="Please Refrain from closing me and click here to disable battery saving for the time of use"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
